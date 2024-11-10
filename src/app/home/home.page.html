@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <app-header title="The Golden Hotel"></app-header>
+
+    <ion-buttons slot="end">
+      <ion-button
+        [routerLink]="['/login']"
+        class="login"
+        expand="block"
+        mode="ios"
+        
+      >
+        Login
+        <ion-icon slot="end" name="person-add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <video autoplay loop muted preload="auto" class="background-video">
+    <source src="assets/video/proaula.mp4" type="video/mp4" />
+  </video>
+
+  <div class="overlay">
+    <div class="title-container">
+      <div class="contenido">
+
+
+        <h1>Bienvenido a The Golden Hotel</h1>
+        <div class="content">
+          <p >Disfruta de una experiencia única en nuestro hotel.</p>
+        </div>
+      </div>
+      </div>
+  </div>
+</ion-content>

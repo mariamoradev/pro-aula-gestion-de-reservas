@@ -1,0 +1,41 @@
+<app-header title="Login"></app-header>
+
+<ion-content class="login-background">
+  <div class="d-flex-center">
+    <form [formGroup]="loginForm" class="auth-form" (ngSubmit)="doLogin()">
+      <app-logo></app-logo>
+      <app-input
+        [control]="email"
+        autocomplete="email"
+        icon="mail-outline"
+        type="email"
+        label="Email"
+      >
+      </app-input>
+
+      <app-input
+        [control]="password"
+        icon="lock-closed-outline"
+        type="password"
+        label="password"
+      ></app-input>
+
+      <app-button
+        type="submit"
+        [disabled]="this.loginForm.invalid"
+        value="Login"
+      ></app-button>
+
+      <ion-button
+        [routerLink]="['/signup']"
+        class="register"
+        expand="block"
+        mode="ios"
+        fill="outline"
+      >
+        Register
+        <ion-icon slot="end" name="person-add-outline"></ion-icon>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
