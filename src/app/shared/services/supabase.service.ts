@@ -6,24 +6,25 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
   providedIn: 'root'
 })
 export class SupabaseService {
-
   private supabase: SupabaseClient;
 
   constructor() {
-    
-    this.supabase = createClient('https://veynqxcbunipwjfpljmc.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZleW5xeGNidW5pcHdqZnBsam1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEwMDIwNjEsImV4cCI6MjA0NjU3ODA2MX0.JcJc4UH7DYevXiPp1ZKdwR0yMIPou7AWGLCBxlexOZM');
+    this.supabase = createClient(
+      'https://veynqxcbunipwjfpljmc.supabase.co', 
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZleW5xeGNidW5pcHdqZnBsam1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEwMDIwNjEsImV4cCI6MjA0NjU3ODA2MX0.JcJc4UH7DYevXiPp1ZKdwR0yMIPou7AWGLCBxlexOZM'
+    );
   }
 
   // Función para subir archivos y obtener la URL pública
   async uploadFileAndGetUrl(file: File): Promise<string> {
     const fileName = `${Date.now()}_${file.name}`;
 
-    // Subir el archivo al bucket del proyect
+    // Subir el archivo al bucket del proyecto
     const { data, error } = await this.supabase.storage.from('user-profile-pictures').upload(fileName, file);
 
-    // por si falla la subida se muestra error
     if (error) {
-      throw error;
+      console.error("Error uploading file:", error);
+      throw new Error("Failed to upload file.");
     }
 
     // Obtener la URL pública del archivo

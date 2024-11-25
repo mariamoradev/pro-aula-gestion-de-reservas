@@ -1,6 +1,23 @@
-<ion-avatar (click)="file.click()">
-  <img alt="Avatar" [src]=" control.value || image" />
+<ion-avatar (click)="onlyView ? null : takePhoto()">
+  <img [alt]="'Imagen de perfil del usuario'" [src]="image" />
 </ion-avatar>
 
+<!-- Mostrar input de archivo si no es solo vista -->
+<input 
+  *ngIf="!onlyView" 
+  [accept]="validMimeTypes.join(',')" 
+  type="file" 
+  (change)="uploadFile($event)" 
+  style="display: none;" 
+  #fileInput
+/>
 
-<input [accept]="mimeType" [multiple]="false" (change)="uploadFile($event)" type="file" #file style="opacity: 0;">
+<!-- Indicador de carga -->
+<div *ngIf="isLoading" class="loading">
+  Subiendo imagen...
+</div>
+
+<!-- Mensaje de error -->
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>

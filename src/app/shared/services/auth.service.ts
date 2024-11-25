@@ -16,7 +16,7 @@ export class AuthService {
     });
   }
   
-  public Login(email: string, password: string){
+  public doLogin(email: string, password: string){
       return new Promise((resolve, reject)=>{
         this.fbAuth.signInWithEmailAndPassword(email, password)
         .then((res)=> resolve(res))
