@@ -1,0 +1,39 @@
+ion-toolbar {
+    --background: linear-gradient(45deg, #4caf50, #81c784);
+    --color: #ffffff;
+  }
+  
+  ion-card {
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+  }
+  
+  ion-card-header {
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .form-card {
+    margin-top: 20px;
+  }
+  
+  ion-thumbnail img {
+    border-radius: 15px;
+    object-fit: cover;
+  }
+  
+  .animated-card {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear Habitación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="roomForm" (ngSubmit)="createRoom()">
+    <ion-item>
+      <ion-label position="floating">Nombre de la habitación</ion-label>
+      <ion-input formControlName="name" type="text" required></ion-input>
+    </ion-item>
+
+        <ion-item>
+      <ion-label position="floating">Número de habitación</ion-label>
+      <ion-input formControlName="roomNumber" type="number" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="roomForm.get('roomNumber')?.hasError('roomNumberNotUnique')">
+      Este número de habitación ya está registrado.
+    </ion-text>
+    
+
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea formControlName="description" required></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Precio por noche</ion-label>
+      <ion-input formControlName="pricePerNight" type="number" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Precio por día</ion-label>
+      <ion-input formControlName="pricePerDay" type="number" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Imagen de la habitación</ion-label>
+      <input type="file" (change)="uploadImage($event)">
+    </ion-item>
+
+  
+
+    <ion-button expand="full" type="submit" [disabled]="roomForm.invalid">Registrar Habitación</ion-button>
+  </form>
+</ion-content>

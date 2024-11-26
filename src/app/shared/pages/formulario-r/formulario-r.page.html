@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">Reservar Habitación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+ 
+  <ion-card *ngIf="habitacion" class="animated-card">
+    <ion-card-header>
+      <ion-card-title class="ion-text-uppercase ion-text-bold">{{ habitacion.name }}</ion-card-title>
+      <ion-card-subtitle class="text-muted">Número: {{ habitacion.roomNumber }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <p><strong>Descripción:</strong> {{ habitacion.description }}</p>
+            <p><strong>Precio por noche:</strong> ${{ habitacion.pricePerNight }}</p>
+            <p><strong>Precio por día:</strong> ${{ habitacion.pricePerDay }}</p>
+          </ion-col>
+          <ion-col size="6">
+            <ion-thumbnail>
+              <img [src]="habitacion.image" alt="Imagen de habitación" />
+            </ion-thumbnail>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  
+  <form (ngSubmit)="submitReservation()" #reservationForm="ngForm">
+    <ion-card class="form-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Datos de la Reserva</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="inset">
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input
+              type="text"
+              required
+              [(ngModel)]="reservation.nombre"
+              name="nombre"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Apellidos</ion-label>
+            <ion-input
+              type="text"
+              required
+              [(ngModel)]="reservation.apellidos"
+              name="apellidos"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Número de Cédula</ion-label>
+            <ion-input
+              type="text"
+              required
+              [(ngModel)]="reservation.cedula"
+              name="cedula"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Día de Llegada</ion-label>
+            <ion-datetime
+              presentation="date"
+              required
+              [(ngModel)]="reservation.diaLlegada"
+              name="diaLlegada"
+            ></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Método de Pago</ion-label>
+            <ion-select
+              required
+              [(ngModel)]="reservation.metodoPago"
+              name="metodoPago"
+            >
+              <ion-select-option value="tarjetaCredito">Tarjeta de Crédito</ion-select-option>
+              <ion-select-option value="tarjetaDebito">Tarjeta de Débito</ion-select-option>
+              <ion-select-option value="PSE">PSE</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        
+        <ion-button expand="block" color="success" type="submit" [disabled]="!reservationForm.valid">
+          Reservar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

@@ -1,0 +1,63 @@
+
+ion-content.login-background {
+    --background: none; /* Eliminando fondito predeterminado de Ionic */
+    background: url('/assets/icon/log.jpg') no-repeat center center fixed; 
+    background-size: cover; /*cubriendo todoel fondo */
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh; /* cubriendo altura */
+    width: 100vw;  /* cubriendo ancho */
+    position: relative; /* elementos en posicion correcta */
+ 
+  }
+  
+  /*Evitando que el contenedor se suba con todo y casilla*/
+  .d-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    //form centrado:
+    position: relative;
+    border-radius: 50%;
+  }
+  
+  .auth-form {
+    border-radius: 50%;
+    background-color: #2b198579; // Transparencia
+    padding: 50px;
+    padding-bottom: 40px;
+    padding-top: -10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Sombritas
+    width: 100%;
+    max-width: 340px; // tamaño form
+    
+    text-align: center;
+    
+  }
+
+  input{
+    font-size: 16px;
+    color: #333;
+  }
+
+ 
+  ion-input, ion-textarea, ion-select {
+    --padding-bottom: 10px;
+    --padding-top: 10px;
+  }
+
+  .register{
+    margin-top: 5%;
+    color: aliceblue;
+    font-weight: 5em;
+  
+
+    
+  }
+  
+  
+
+  
