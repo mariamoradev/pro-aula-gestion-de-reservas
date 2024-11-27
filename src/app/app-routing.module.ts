@@ -23,6 +23,31 @@ const routes: Routes = [
     path: 'reservas',
     loadChildren: () => import('./shared/pages/reservas/reservas.module').then( m => m.ReservasPageModule)
   },
+ 
+  {
+    path: 'portadmin',
+    loadChildren: () => import('./auth/portadmin/portadmin.module').then( m => m.PortadminPageModule)
+  },
+
+  {
+
+  path: 'create-room',
+  loadChildren: () => import('./auth/portadmin/create-room/create-room.module').then( m => m.CreateRoomPageModule)
+  },
+
+
+{
+  path: 'room-list',
+  loadChildren: () => import('./auth/portadmin/room-list/room-list.module').then( m => m.RoomListPageModule)
+  },
+  {
+    path: 'formulario-r',
+    loadChildren: () => import('./shared/pages/formulario-r/formulario-r.module').then( m => m.FormularioRPageModule)
+  },
+  
+  
+  
+  
 ];
 
 @NgModule({

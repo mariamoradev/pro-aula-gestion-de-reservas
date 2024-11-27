@@ -1,9 +1,12 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+// capacitor.config.ts
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'GestionReservas',
-  webDir: 'www'
+  appId: 'com.example.app',
+  appName: 'pro-aula-gestion',
+  webDir: 'www', // Confirma que este valor sea "www"
+  bundledWebRuntime: false,
 };
 
 export default config;
+

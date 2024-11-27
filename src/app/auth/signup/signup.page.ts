@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { User } from 'src/app/interfaces/user';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; // Importamos el plugin de Camera
 
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -11,12 +11,14 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { SupabaseService } from 'src/app/shared/services/supabase.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
+// Importamos la interfaz User
+import { User } from 'src/app/interfaces/user';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-
 export class SignupPage implements OnInit {
   public name!: FormControl;
   public lastName!: FormControl;
@@ -67,6 +69,19 @@ export class SignupPage implements OnInit {
     });
   }
 
+  public async takePhoto() {
+    const image = await Camera.getPhoto({
+      quality: 100,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt, // Permite elegir entre cámara o galería
+    });
+
+    // Asignamos la imagen tomada al formulario
+    this.registerForm.patchValue({
+      image: image.dataUrl
+    });
+  }
+
   public async doRegister() {
     try {
       await this.loadingSrv.show();
@@ -80,7 +95,15 @@ export class SignupPage implements OnInit {
         imageUrl = await this.supabase.uploadFileAndGetUrl(image);
       }
 
-      await this.signUser(userID, email, imageUrl);
+      // Guardamos la información del usuario
+      await this.angularFire.collection('users').doc(userID).set({
+        name: this.registerForm.get('name')?.value,
+        lastName: this.registerForm.get('lastName')?.value,
+        age: this.registerForm.get('age')?.value,
+        phone: this.registerForm.get('phone')?.value,
+        image: imageUrl,
+        email: this.registerForm.get('email')?.value
+      });
 
       this.toastService.presentToast('Registration successful, welcome!', 2000, 'top');
       this.navCtrl.navigateForward("/login");
@@ -129,41 +152,14 @@ export class SignupPage implements OnInit {
       await this.loadingSrv.show();
       const userDoc = await lastValueFrom(this.angularFire.collection('users').doc(this.id).get());
 
-      if (userDoc.exists) {
+      if (userDoc?.exists) {
         const userData = userDoc.data() as User;
-        this.registerForm.patchValue({
-          name: userData?.name || '',         
-          lastName: userData?.lastName || '', 
-          age: userData?.age || '',           
-          phone: userData?.phone || '',       
-          image: userData?.image || ''        
-        });
-      } else {
-        console.error('No user data found.');
+        this.registerForm.patchValue(userData);
       }
-
-      this.registerForm.removeControl('email');
-      this.registerForm.removeControl('password');
       await this.loadingSrv.dimiss();
     } catch (error) {
-      console.error('Error registering user data:', error);
+      console.error(error);
       await this.loadingSrv.dimiss();
-    }
-  }
-
-  private async signUser(userID: string, email: string, imageUrl: string) {
-    try {
-      await this.angularFire.collection('users').doc(userID).set({
-        email,
-        image: imageUrl,                      
-        name: this.registerForm.get('name')?.value,
-        lastName: this.registerForm.get('lastName')?.value,
-        age: this.registerForm.get('age')?.value,
-        phone: this.registerForm.get('phone')?.value
-      });
-    } catch (error) {
-      console.error('Error registering user data:', error);
-      throw error;
     }
   }
 }

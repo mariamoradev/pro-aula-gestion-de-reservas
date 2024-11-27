@@ -34,7 +34,6 @@ export class LoginPage {
      await this.loadingSrv.dimiss();
      this.navCtrl.navigateForward("reservas");
      
-     //Mensaje de bienvenida en caso de exito:
      this.toastservice.presentToast('Welcome, dear user', 2000, 'top');
    }catch(error){
      await this.loadingSrv.dimiss();

@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-back-button name="arrow-back-outline" slot="start" class="regresar" defaultHref="/auth"></ion-back-button>
+    <ion-back-button
+      name="arrow-back-outline"
+      slot="start"
+      class="regresar"
+      defaultHref="/auth"
+    ></ion-back-button>
     <ion-title>Sign-up</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,68 +14,105 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">sign-up</ion-title>
-      
-
     </ion-toolbar>
   </ion-header>
 
   <ion-card>
-    <ion-card-content style="margin-bottom: 20px;">
-      <form [formGroup]="registerForm" (ngSubmit)=" !id ? doRegister() :  doUpdate()" style="margin-bottom: 20px;">
+    <ion-card-content style="margin-bottom: 20px">
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)=" !id ? doRegister() :  doUpdate()"
+        style="margin-bottom: 20px"
+      >
         <ion-row>
           <ion-col>
             <app-avatar [control]="image" class="avatar-container"></app-avatar>
+         
           </ion-col>
         </ion-row>
-        
+
         <ion-row>
           <ion-col>
             <app-input [control]="name" label="Name" type="text"></app-input>
-            
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <app-input [control]="lastName" label="LastName" type="text"></app-input>
-           
+            <div *ngIf="name.invalid && name.touched" class="error-message">
+              <span *ngIf="name.hasError('required')">Name is required.</span>
+              <span *ngIf="name.hasError('pattern')"
+                >Only letters are allowed.</span
+              >
+            </div>
           </ion-col>
         </ion-row>
 
-       
+        <ion-row>
+          <ion-col>
+            <app-input
+              [control]="lastName"
+              label="LastName"
+              type="text"
+            ></app-input>
+            <div *ngIf="lastName.invalid && lastName.touched" class="error-message">
+              <span *ngIf="lastName.hasError('required')">Last name is required.</span>
+              <span *ngIf="lastName.hasError('pattern')">Only letters are allowed.</span>
+            </div>
+          </ion-col>
+        </ion-row>
+
         <ion-row>
           <ion-col>
             <app-input [control]="age" label="Age" type="number"></app-input>
-           
+            <div *ngIf="age.invalid && age.touched" class="error-message">
+              <span *ngIf="age.hasError('required')">Age is required.</span>
+              <span *ngIf="age.hasError('min')">Age must be at least 18.</span>
+              <span *ngIf="age.hasError('max')">Age must be less than 90.</span>
+            </div>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col>
-            <app-input [control]="phone" label="Phone" type="number"></app-input>
-            
+            <app-input
+              [control]="phone"
+              label="Phone"
+              type="number"
+            ></app-input>
+            <div *ngIf="phone.invalid && phone.touched" class="error-message">
+              <span *ngIf="phone.hasError('required')">Phone number is required.</span>
+              <span *ngIf="phone.hasError('maxlength')">Phone number must be 10 digits.</span>
+            </div>
           </ion-col>
         </ion-row>
 
-        @if (!id){
-        <ion-row>
+        <ion-row *ngIf="!id">
           <ion-col>
             <app-input [control]="email" label="Email" type="email"></app-input>
-            
+            <div *ngIf="email.invalid && email.touched" class="error-message">
+              <span *ngIf="email.hasError('required')">Email is required.</span>
+              <span *ngIf="email.hasError('email')">Please enter a valid email.</span>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!id">
+          <ion-col>
+            <app-input
+              [control]="password"
+              label="Password"
+              type="password"
+            ></app-input>
+            <div *ngIf="password.invalid && password.touched" class="error-message">
+              <span *ngIf="password.hasError('required')">Password is required.</span>
+            </div>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col>
-            <app-input [control]="password" label="Password" type="password"></app-input>
-            
+            <app-button
+              [value]="!id ? 'Register' : 'Update'"
+              type="submit"
+            ></app-button>
           </ion-col>
         </ion-row>
-      }
-        <ion-row>
-          <ion-col>
-            <app-button [value]="!id? 'Register' : 'Update' " type="submit"></app-button>
-          </ion-col>
-        </ion-row> 
       </form>
     </ion-card-content>
   </ion-card>

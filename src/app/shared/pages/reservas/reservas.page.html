@@ -1,13 +1,36 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>reservas</ion-title>
+    <ion-title>Lista de Habitaciones</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">reservas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+ 
+  <ion-searchbar
+    [(ngModel)]="searchQuery"
+    (ionInput)="filterRooms()"
+    placeholder="Buscar por número de habitación"
+  ></ion-searchbar>
+
+
+  <ion-list>
+    <ion-item *ngFor="let habitacion of filteredHabitaciones">
+      <ion-thumbnail slot="start">
+        <img [src]="habitacion.image" alt="Imagen de habitación" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ habitacion.name }}</h2>
+        <p>Número: {{ habitacion.roomNumber }}</p>
+        <p>Descripción: {{ habitacion.description }}</p>
+        <p>Precio por noche: ${{ habitacion.pricePerNight }}</p>
+        <p>Precio por día: ${{ habitacion.pricePerDay }}</p>
+      </ion-label>
+
+      <ion-button slot="end" color="primary" expand="block" (click)="goToReservation(habitacion)">
+        Reservar
+      </ion-button>
+      
+      
+    </ion-item>
+  </ion-list>
 </ion-content>
